@@ -40,9 +40,9 @@ class UserService{
             expiresIn:"30d"
         }
        
-        const secret = process.env.secret;
+        const JWT_SECRET = process.env.JWT_SECRET;
         
-        const token = jwt.sign(payload,secret,option);
+        const token = jwt.sign(payload, JWT_SECRET,option);
         console.log(token, 'token')
         return token
     }
