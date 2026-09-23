@@ -15,26 +15,35 @@ class UserService{
 
     logInUser = async({ email, password })=>{
       const user = await userModel.findOne({email});
-      console.log(user,'user')
+      
+      if(!user){
+        throw new Error("user not found")
+      }
       const isMatch = await bcrypt.compare(password,user.password);
-      console.log(isMatch);
+      
+
       if(!isMatch){
-        throw new error("password is incorrect")
+        throw new Error("password is incorrect")
       }else{
         const token = this.generateToken({email});
         return token
       }
     }
 
-    generateToken = async({email})=>{
+    
+
+    generateToken = ({email})=>{
         const payload = {
             email
         }
         const option = {
-            expiresIn:"1000*60*60*24*30"
+            expiresIn:"30d"
         }
+       
         const secret = process.env.secret;
-        const token = await jwt.sign(payload,secret,option);
+        
+        const token = jwt.sign(payload,secret,option);
+        console.log(token, 'token')
         return token
     }
 }
