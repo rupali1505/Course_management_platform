@@ -8,13 +8,14 @@ const dashboardRoutes = require("./Router/dashboard.routes");
 const progressRoutes = require("./Router/progress.routes")
 dotenv.config();
 const authRoute = require("./Router/userAuth.route");
-const notFoundMiddleware =
-    require("./Middleware/notFoundMiddleware");
-
-const errorMiddleware =
-    require("./Middleware/error.middleware");
+const notFoundMiddleware =require("./Middleware/notFoundMiddleware");
+const errorMiddleware =require("./Middleware/error.middleware");
+const cors = require("cors")
 
 const app = express();
+app.use(cors({
+    origin: "http://localhost:3000"
+}));
 app.use(express.json());
 app.use("/api/user",authRoute);
 app.use("/api/courses", courseRoutes);
